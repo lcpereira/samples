@@ -1,0 +1,48 @@
+<div class="header">
+    <h1>Tic Tac Toe</h1>
+</div>
+
+<div class="score">
+    <div class="score__data">
+        <div [class.active]="currentPlayer === 'X'">
+            <span>X</span>
+            <span>{{ score.x }}</span>
+        </div>
+        <div [class.active]="currentPlayer === 'O'">
+            <span>O</span>
+            <span>{{ score.o }}</span>
+        </div>
+    </div>
+    <div class="score__info" *ngIf="!hasWinner">
+        <span>Instead of: </span>
+        <span>{{ currentPlayer }}</span>
+    </div>
+    <div class="score__info" *ngIf="hasWinner">
+        <span>End game</span>
+    </div>
+</div>
+
+<div class="game">
+    <table>
+        <tbody>
+            <tr class="game__row" *ngFor="let row of data">
+                <td class="game__col" *ngFor="let col of row" (click)="onClick(col)">
+                    <ng-container *ngTemplateOutlet="inner; context:{ value: getLabel(col) }"></ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    <div class="footer__reset">
+        <span (click)="resetGame()">restart game</span>
+    </div>
+    <div class="footer__info">
+        <span>Inspired by Google's tic tac toe. <a href="https://www.google.com/search?q=tic-tac-toe" target="_blanck">See here!</a></span>
+    </div>
+</div>
+
+<ng-template #inner let-value="value">
+    <span [class.game__col--x]="value === 'X'" [class.game__col--o]="value === 'O'">{{ value }}</span>
+</ng-template>
